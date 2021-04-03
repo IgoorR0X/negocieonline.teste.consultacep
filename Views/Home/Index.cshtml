@@ -1,0 +1,67 @@
+﻿@model List<Endereco>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+
+@*<script>Alert(@ViewBag["msg"])</script>*@
+
+<div class="text-center">
+    <h1 class="display-4">Consultar CEP</h1>
+</div>
+<br />
+<br />
+
+<div class="container">
+    <div class="col-sm-6 float-left">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+        <form>
+            <label>CEP</label><br />
+            @Html.TextBox("cep")
+            <br />
+            <input id="btnProcAPI" type="submit" asp-action="Search" value="Procurar" class="btn btn-primary" /><br />
+            <input type="submit" id="btnEnviar" asp-action="Create" value="InserirDB" class="btn btn-primary"/><br />
+            <input type="submit" id="btnConsultar" asp-action="ConsultarDB" value="ConsultarDB" class="btn btn-primary"/>
+        </form>
+        }
+    </div>
+    <div class="col-sm-6 float-right">
+    </div>
+    <div class="col-sm-6 float-right">
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var consult in Model)
+            {
+                <label>CEP: </label>
+                <label id="CEP" name="CEP">@consult.cep</label><br />
+                <label>Logradouro: </label>
+                <label id="logradouro" name="logradouro">@consult.logradouro</label><br />
+                <label>Complemento: </label>
+                <label id="complemento" name="complemento">@consult.complemento</label><br />
+                <label>Bairro: </label>
+                <label id="bairro" name="bairro">@consult.bairro</label><br />
+                <label>Cidade: </label>
+                <label id="localidade" name="localidade">@consult.localidade</label><br />
+                <label>Estado: </label>
+                <label id="uf" name="uf">@consult.uf</label><br />
+                <label>IBGE: </label>
+                <label id="ibge" name="ibge">@consult.ibge</label><br />
+                <label>GIA: </label>
+                <label id="gia" name="gia">@consult.gia</label><br />
+                <label>DDD: </label>
+                <label id="ddd" name="ddd">@consult.ddd</label><br />
+                <label>SIAFI: </label>
+                <label id="siafi" name="siafi">@consult.siafi</label><br />
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
